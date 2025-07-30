@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>库存盘点</title>
+
+    <!-- 引入 Bootstrap 和 Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- 引入自定义样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>库存盘点</h1>
+
+        <!-- 上传 -->
+        <input type="file" id="fileUpload" accept=".xlsx" class="file-input">
+
+        <!-- 输入框 -->
+        <input type="text" id="barcodeInput" placeholder="扫码或手动输入条码" class="barcode-input" />
+
+        <!-- 提示 -->
+        <p id="message" class="message"></p>
+
+        <!-- 表格 -->
+        <table id="inventoryTable" class="display">
+            <!-- 列宽 -->
+            <colgroup>
+                <col style="width: 15%;">
+                <col style="width: 50%;">
+                <col style="width: 20%;">
+                <col style="width: 15%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Option1</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <!-- 按钮容器 -->
+        <div class="button-container">
+            <button id="copyBtn" class="export-btn">拷贝数据</button>
+            <button id="exportBtn" class="export-btn">输出完整数据</button>
+        </div>
+
+        <p id="copyMessage" class="copy-message"></p>
+    </div>
+
+    <!-- 帮助按钮 -->
+    <button id="helpBtn" class="side-help-btn">使用教程</button>
+
+    <!-- 切换暗色模式按钮 -->
+    <button id="toggleDarkMode" class="btn btn-outline-light dark-mode-toggle">
+        <i id="darkModeIcon" class="fas fa-moon"></i>
+    </button>
+
+    <!-- 切换语言按钮 -->
+    <button id="toggleLanguage" class="btn btn-outline-light language-toggle">
+        <i id="languageIcon" class="fas fa-language"></i>
+    </button>
+
+    <!-- 引入外部 JavaScript 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.6/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <!-- 引入自定义脚本 -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('helpBtn').addEventListener('click', function() {
+            window.open('/help', '_blank');
+        });
+
+        // 切换暗色模式和图标
+        document.getElementById('toggleDarkMode').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+
+            // 根据当前模式切换图标
+            const darkModeIcon = document.getElementById('darkModeIcon');
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>

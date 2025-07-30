@@ -1,0 +1,234 @@
+/* 基础样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    transition: color 0.5s ease;
+    font-size: 1.5rem;
+}
+
+.file-input, .barcode-input {
+    display: block;
+    width: 97%;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.message {
+    color: green;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.copy-message {
+    color: blue;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#inventoryTable {
+    width: 100%;
+    margin-bottom: 20px;
+    table-layout: fixed;
+    font-size: 0.8rem;
+}
+
+#inventoryTable th, #inventoryTable td {
+    text-align: left;
+    padding: 6px;
+}
+
+#inventoryTable th {
+    background-color: #f2f2f2;
+    font-size: 0.8rem;
+}
+
+td[contenteditable="true"] {
+    background-color: #eef;
+    font-size: 0.8rem;
+}
+
+.export-btn {
+    width: 100%;
+    padding: 8px;
+    background-color: #5e5e5e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    transition: background-color 0.5s ease;
+}
+
+.export-btn:hover {
+    background-color: #8c8b8b;
+}
+
+.side-help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #5e5e5e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 0.8rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.side-help-btn:hover {
+    background-color: #8c8b8b;
+}
+
+/* 暗色模式样式 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode h1 {
+    color: #fff;
+}
+
+.dark-mode .file-input, .dark-mode .barcode-input {
+    background-color: #333;
+    border-color: #5e5e5e;
+    color: #e0e0e0;
+}
+
+.dark-mode #inventoryTable {
+    background-color: #000;
+    color: #e0e0e0;
+}
+
+.dark-mode #inventoryTable th {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.dark-mode #inventoryTable td {
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.dark-mode td[contenteditable="true"] {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.dark-mode .dataTables_wrapper .dataTables_filter input,
+.dark-mode .dataTables_wrapper .dataTables_length select {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #5e5e5e;
+
+}
+
+.dark-mode .dataTables_wrapper .dataTables_info,
+.dark-mode .dataTables_wrapper .dataTables_paginate {
+    color: #e0e0e0;
+}
+
+/* 暗色模式下按钮颜色 */
+.dark-mode .export-btn {
+    background-color: #5e5e5e;
+}
+
+.dark-mode .export-btn:hover {
+    background-color: #8c8b8b;
+}
+
+.dark-mode .side-help-btn {
+    background-color: #5e5e5e;
+}
+
+.dark-mode .side-help-btn:hover {
+    background-color: #8c8b8b;
+}
+
+/* 暗色模式切换按钮 */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    z-index: 1100;
+    cursor: pointer;
+}
+
+.dark-mode-toggle i {
+    font-size: 24px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-toggle i {
+    color: #e0e0e0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.export-btn {
+    flex: 1;
+}
+
+
+
+
+
+.language-toggle {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    z-index: 1100;
+    cursor: pointer;
+}
+
+.language-toggle i {
+    font-size: 24px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+
+body.dark-mode .language-toggle i {
+    color: #e0e0e0;
+}

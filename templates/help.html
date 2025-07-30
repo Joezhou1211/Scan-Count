@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用教程</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>库存盘点使用教程(中文)</h1>
+        <p>步骤1：上传你的Excel文件，通过点击文件上传按钮，将包含库存信息的文件上传至系统。</p>
+        <p>步骤2：使用扫码枪或手动输入商品的条码，统计库存。</p>
+        <p>步骤3：完成统计后，点击拷贝，在cin7中进行对比。或点击保存统计结果为Excel形式</p>
+        <img src="{{ url_for('static', filename='1.jpg') }}" alt="Step 1">
+        <img src="{{ url_for('static', filename='2.jpg') }}" alt="Step 2">
+
+        <h1>Inventory Check Tutorial (English)</h1>
+        <p>Step 1: Upload your Excel file by clicking the file upload button. This file should contain your inventory information.</p>
+        <p>Step 2: Use a barcode scanner or manually enter the product barcode to count the inventory.</p>
+        <p>Step 3: After completing the count, click 'Copy' to compare in cin7. Or click 'Save' to save the count results in Excel format.</p>
+    </div>
+</body>
+</html>
