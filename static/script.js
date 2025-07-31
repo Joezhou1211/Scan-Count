@@ -104,9 +104,13 @@ function populateTable(data) {
         const name = row[nameIdx] || '';
         const others = otherIdx.map(o => row[o.index] || '');
         const countVal = countIdx !== -1 ? (row[countIdx] || '0') : '0';
-        let tr = `<tr><td>${code}</td><td>${name}</td>`;
-        others.forEach(v => { tr += `<td>${v}</td>`; });
-        tr += `<td contenteditable="true" class="count-cell">${countVal}</td></tr>`;
+
+        let tr = '<tr>';
+        tr += `<td contenteditable="true">${code}</td>`;
+        tr += `<td contenteditable="true">${name}</td>`;
+        others.forEach(v => { tr += `<td contenteditable="true">${v}</td>`; });
+        tr += `<td contenteditable="true" class="count-cell">${countVal}</td>`;
+        tr += '</tr>';
         tableBody.append(tr);
     });
 
@@ -317,19 +321,32 @@ function switchToChinese() {
     document.getElementById('helpBtn').textContent = '使用教程';
 }
 
-const yesAudio = new Audio('static/yes.wav');
-const noAudio = new Audio('static/no.mp3');
-//设为最大音量
-yesAudio.volume = 1;
-noAudio.volume = 1;
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let yesBuffer = null;
+let noBuffer = null;
 
-// 播放提示音
-function playSound(d) {
-    if (d) {
-        yesAudio.currentTime = 0;
-        yesAudio.play();
-    } else {
-        noAudio.currentTime = 0;
-        noAudio.play();
+// 预加载音频，避免播放延迟
+fetch('static/yes.wav')
+    .then(r => r.arrayBuffer())
+    .then(b => audioCtx.decodeAudioData(b))
+    .then(buf => { yesBuffer = buf; });
+
+fetch('static/no.mp3')
+    .then(r => r.arrayBuffer())
+    .then(b => audioCtx.decodeAudioData(b))
+    .then(buf => { noBuffer = buf; });
+
+// 在首次交互时恢复音频上下文
+document.addEventListener('keydown', () => audioCtx.resume(), { once: true });
+document.addEventListener('click', () => audioCtx.resume(), { once: true });
+
+function playSound(success) {
+    const buffer = success ? yesBuffer : noBuffer;
+    if (!buffer) {
+        return; // 音频尚未加载完成
     }
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    source.start(0);
 }
