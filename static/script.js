@@ -1,4 +1,5 @@
 let lastSelectedFile = null;
+let countColumnIndex = -1;
 
 document.getElementById('fileUpload').addEventListener('change', function(event) {
     const fileInput = this;
@@ -33,6 +34,64 @@ function handleFileUpload(event) {
 }
 
 function populateTable(data) {
+    const headers = data[0].map(h => (h || '').toString().trim());
+    let codeIdx = -1;
+    let nameIdx = -1;
+    let countIdx = -1;
+
+    headers.forEach((h, i) => {
+        const lower = h.toLowerCase();
+        if (lower === 'code') {
+            codeIdx = i;
+        } else if (lower === 'name' || lower === 'product name') {
+            nameIdx = i;
+        } else if (lower === 'count') {
+            countIdx = i;
+        }
+    });
+
+    if (nameIdx === -1) {
+        headers.forEach((h, i) => {
+            if (i === codeIdx || i === countIdx) return;
+            const allRepair = data.slice(1).every(r => (r[i] || '').toString().toLowerCase().includes('repair'));
+            if (allRepair) {
+                nameIdx = i;
+            }
+        });
+    }
+
+    if (codeIdx === -1) {
+        const msg = currentLanguage === 'en'
+            ? 'Code column not found. Please rename the column to Code'
+            : '未找到Code列，请重命名列名为Code';
+        alert(msg);
+        return;
+    }
+
+    if (nameIdx === -1) {
+        const msg = currentLanguage === 'en'
+            ? 'Name column not found. Please rename the column to Name'
+            : '未找到Name列，请重命名Name列名为Name';
+        alert(msg);
+        return;
+    }
+
+    const otherIdx = [];
+    headers.forEach((h, i) => {
+        if (i !== codeIdx && i !== nameIdx && i !== countIdx && h) {
+            otherIdx.push({header: h, index: i});
+        }
+    });
+
+    const tableHead = $('#tableHeader');
+    tableHead.empty();
+    tableHead.append('<th>Code</th>');
+    tableHead.append('<th>Name</th>');
+    otherIdx.forEach(o => {
+        tableHead.append(`<th>${o.header}</th>`);
+    });
+    tableHead.append('<th>Count</th>');
+
     const tableBody = $('#inventoryTable tbody');
     tableBody.empty();
 
@@ -41,27 +100,29 @@ function populateTable(data) {
     }
 
     data.slice(1).forEach(row => {
-        const code = row[0] || '';
-        const name = row[1] || '';
-        const option1 = row[2] || '';
-        const tr = `<tr>
-            <td>${code}</td>
-            <td>${name}</td>
-            <td>${option1}</td>
-            <td contenteditable="true" class="count-cell">0</td>
-        </tr>`;
+        const code = row[codeIdx] || '';
+        const name = row[nameIdx] || '';
+        const others = otherIdx.map(o => row[o.index] || '');
+        const countVal = countIdx !== -1 ? (row[countIdx] || '0') : '0';
+
+        let tr = '<tr>';
+        tr += `<td contenteditable="true">${code}</td>`;
+        tr += `<td contenteditable="true">${name}</td>`;
+        others.forEach(v => { tr += `<td contenteditable="true">${v}</td>`; });
+        tr += `<td contenteditable="true" class="count-cell">${countVal}</td>`;
+        tr += '</tr>';
         tableBody.append(tr);
     });
 
+    countColumnIndex = otherIdx.length + 2; // Code + Name + others
 
     $('#inventoryTable').DataTable({
         "paging": true,
         "searching": true,
         "columnDefs": [
-            { "orderable": false, "targets": 3 }
+            { "orderable": false, "targets": countColumnIndex }
         ]
     });
-
 
     restrictCountToNumbers();
 }
@@ -201,24 +262,24 @@ function copyToClipboard(text) {
 // 导出数据为 .xlsx 文件，包含所有页
 $('#exportBtn').on('click', function() {
     const table = $('#inventoryTable').DataTable();
-    let exportData = [['Code', 'Name', 'Option1', 'Count']];
-
+    let headers = [];
+    $('#inventoryTable thead th').each(function(){
+        headers.push($(this).text());
+    });
+    let exportData = [headers];
 
     table.rows().every(function() {
         const row = this.node();
-        const code = $(row).find('td:eq(0)').text();
-        const name = $(row).find('td:eq(1)').text();
-        const option1 = $(row).find('td:eq(2)').text();
-        const count = $(row).find('td:eq(3)').text();
-        exportData.push([code, name, option1, count]);
+        const cells = [];
+        $(row).find('td').each(function(){
+            cells.push($(this).text());
+        });
+        exportData.push(cells);
     });
 
-    // 使用 SheetJS 生成并下载 .xlsx 文件
     const worksheet = XLSX.utils.aoa_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "InventoryData");
-
-    // 导出 .xlsx 文件
     XLSX.writeFile(workbook, 'inventory_data.xlsx');
 });
 
@@ -260,19 +321,32 @@ function switchToChinese() {
     document.getElementById('helpBtn').textContent = '使用教程';
 }
 
-const yesAudio = new Audio('static/yes.wav');
-const noAudio = new Audio('static/no.mp3');
-//设为最大音量
-yesAudio.volume = 1;
-noAudio.volume = 1;
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let yesBuffer = null;
+let noBuffer = null;
 
-// 播放提示音
-function playSound(d) {
-    if (d) {
-        yesAudio.currentTime = 0;
-        yesAudio.play();
-    } else {
-        noAudio.currentTime = 0;
-        noAudio.play();
+// 预加载音频，避免播放延迟
+fetch('static/yes.wav')
+    .then(r => r.arrayBuffer())
+    .then(b => audioCtx.decodeAudioData(b))
+    .then(buf => { yesBuffer = buf; });
+
+fetch('static/no.mp3')
+    .then(r => r.arrayBuffer())
+    .then(b => audioCtx.decodeAudioData(b))
+    .then(buf => { noBuffer = buf; });
+
+// 在首次交互时恢复音频上下文
+document.addEventListener('keydown', () => audioCtx.resume(), { once: true });
+document.addEventListener('click', () => audioCtx.resume(), { once: true });
+
+function playSound(success) {
+    const buffer = success ? yesBuffer : noBuffer;
+    if (!buffer) {
+        return; // 音频尚未加载完成
     }
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    source.start(0);
 }

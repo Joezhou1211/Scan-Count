@@ -20,6 +20,8 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 1.4rem;
+            margin-top: 10px;
         }
         img {
             max-width: 100%;
@@ -32,21 +34,37 @@
             color: #555;
             line-height: 1.6;
         }
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+        a.back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>库存盘点使用教程(中文)</h1>
-        <p>步骤1：上传你的Excel文件，通过点击文件上传按钮，将包含库存信息的文件上传至系统。</p>
-        <p>步骤2：使用扫码枪或手动输入商品的条码，统计库存。</p>
-        <p>步骤3：完成统计后，点击拷贝，在cin7中进行对比。或点击保存统计结果为Excel形式</p>
-        <img src="{{ url_for('static', filename='1.jpg') }}" alt="Step 1">
-        <img src="{{ url_for('static', filename='2.jpg') }}" alt="Step 2">
+        <h1>库存盘点使用教程</h1>
+        <ul>
+            <li>步骤1：点击“上传文件”选择包含库存的 Excel 表。</li>
+            <li>步骤2：在输入框扫码或手动输入条码，系统会立即更新数量并播放提示音。</li>
+            <li>步骤3：统计完成后，可点击“拷贝数据”或“输出完整数据”进行后续处理。</li>
+        </ul>
+        <img src="{{ url_for('static', filename='1.jpg') }}" alt="上传文件">
+        <img src="{{ url_for('static', filename='2.jpg') }}" alt="扫描条码">
 
-        <h1>Inventory Check Tutorial (English)</h1>
-        <p>Step 1: Upload your Excel file by clicking the file upload button. This file should contain your inventory information.</p>
-        <p>Step 2: Use a barcode scanner or manually enter the product barcode to count the inventory.</p>
-        <p>Step 3: After completing the count, click 'Copy' to compare in cin7. Or click 'Save' to save the count results in Excel format.</p>
+        <h1>Inventory Tutorial</h1>
+        <ul>
+            <li>Step 1: Click "Upload File" and choose the Excel sheet with your stock list.</li>
+            <li>Step 2: Scan or type the barcode in the input box. The count updates instantly with sound feedback.</li>
+            <li>Step 3: When finished, use "Copy Data" or "Export Complete Data" for further processing.</li>
+        </ul>
+
+        <a href="/" class="back">返回主页 / Back to Home</a>
     </div>
 </body>
 </html>
