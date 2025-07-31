@@ -13,5 +13,10 @@ def help():
     return render_template('help.html')
 
 
+@app.route('/updates')
+def updates():
+    return render_template('updates.html')
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=12580, debug=False)

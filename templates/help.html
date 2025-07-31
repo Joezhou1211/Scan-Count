@@ -4,67 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>使用教程</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 1.4rem;
-            margin-top: 10px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px 0;
-        }
-        p {
-            font-size: 16px;
-            color: #555;
-            line-height: 1.6;
-        }
-        ul {
-            list-style: disc;
-            margin-left: 20px;
-        }
-        a.back {
-            display: inline-block;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="p-3">
     <div class="container">
-        <h1>库存盘点使用教程</h1>
+        <h1 class="text-center my-3">库存盘点使用教程</h1>
         <ul>
             <li>步骤1：点击“上传文件”选择包含库存的 Excel 表。</li>
             <li>步骤2：在输入框扫码或手动输入条码，系统会立即更新数量并播放提示音。</li>
             <li>步骤3：统计完成后，可点击“拷贝数据”或“输出完整数据”进行后续处理。</li>
         </ul>
-        <img src="{{ url_for('static', filename='1.jpg') }}" alt="上传文件">
-        <img src="{{ url_for('static', filename='2.jpg') }}" alt="扫描条码">
+        <img src="{{ url_for('static', filename='1.jpg') }}" class="img-fluid my-3" alt="上传文件">
+        <img src="{{ url_for('static', filename='2.jpg') }}" class="img-fluid my-3" alt="扫描条码">
 
-        <h1>Inventory Tutorial</h1>
+        <h1 class="text-center my-4">Inventory Tutorial</h1>
         <ul>
             <li>Step 1: Click "Upload File" and choose the Excel sheet with your stock list.</li>
             <li>Step 2: Scan or type the barcode in the input box. The count updates instantly with sound feedback.</li>
             <li>Step 3: When finished, use "Copy Data" or "Export Complete Data" for further processing.</li>
         </ul>
 
-        <a href="/" class="back">返回主页 / Back to Home</a>
+        <a href="/" class="btn btn-secondary mt-4">返回主页 / Back to Home</a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -308,6 +308,7 @@ function switchToEnglish() {
     document.getElementById('message').textContent = '';
     document.getElementById('copyMessage').textContent = '';
     document.getElementById('helpBtn').textContent = 'Tutorial';
+    document.getElementById('updatesBtn').textContent = 'Updates';
 }
 
 // 动态切换为中文文本
@@ -319,6 +320,7 @@ function switchToChinese() {
     document.getElementById('message').textContent = '';
     document.getElementById('copyMessage').textContent = '';
     document.getElementById('helpBtn').textContent = '使用教程';
+    document.getElementById('updatesBtn').textContent = '最近更新';
 }
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();

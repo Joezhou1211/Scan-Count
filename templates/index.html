@@ -48,6 +48,8 @@
 
     <!-- 帮助按钮 -->
     <button id="helpBtn" class="side-help-btn">使用教程</button>
+    <!-- 最近更新按钮 -->
+    <button id="updatesBtn" class="side-updates-btn">最近更新</button>
 
     <!-- 切换暗色模式按钮 -->
     <button id="toggleDarkMode" class="btn btn-outline-light dark-mode-toggle">
@@ -73,6 +75,10 @@
     <script>
         document.getElementById('helpBtn').addEventListener('click', function() {
             window.open('/help', '_blank');
+        });
+
+        document.getElementById('updatesBtn').addEventListener('click', function() {
+            window.open('/updates', '_blank');
         });
 
         // 切换暗色模式和图标

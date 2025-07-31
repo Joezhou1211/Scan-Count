@@ -102,6 +102,27 @@ td[contenteditable="true"] {
     z-index: 1000;
 }
 
+.side-updates-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #5e5e5e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 0.8rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.side-updates-btn:hover {
+    background-color: #8c8b8b;
+}
+
 .side-help-btn:hover {
     background-color: #8c8b8b;
 }
@@ -174,6 +195,14 @@ body.dark-mode {
 }
 
 .dark-mode .side-help-btn:hover {
+    background-color: #8c8b8b;
+}
+
+.dark-mode .side-updates-btn {
+    background-color: #5e5e5e;
+}
+
+.dark-mode .side-updates-btn:hover {
     background-color: #8c8b8b;
 }
 
