@@ -25,6 +25,12 @@
         <!-- 输入框 -->
         <input type="text" id="barcodeInput" placeholder="扫码或手动输入条码" class="barcode-input" />
 
+        <div class="camera-container">
+            <video id="camera" autoplay playsinline></video>
+            <div id="focusFrame"></div>
+            <input type="range" id="zoomSlider" min="1" max="3" step="0.1">
+        </div>
+
         <!-- 提示 -->
         <p id="message" class="message"></p>
 
@@ -68,6 +74,7 @@
 
     <!-- 引入自定义脚本 -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='camera.js') }}"></script>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
